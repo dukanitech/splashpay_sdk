@@ -5,7 +5,7 @@
 
 A standalone, production-ready Flutter/Dart package for integrating the [SplashPay Tanzania REST API](https://docs.splashpay.co.tz).
 
-This package is **independent from GOPOS** (or any other app). It can be consumed by GOPOS, GoRestaurant, GoParking, GoStay, and other Flutter applications as a normal dependency.
+This package is a standalone SDK that can be consumed by any Flutter application as a normal dependency.
 
 ## Features
 
@@ -231,7 +231,4 @@ Base URL: `https://api.splashpay.co.tz/api/v1`
 
 MIT — see [LICENSE](LICENSE).
 
-## Publishing
 
-See [PUBLISHING.md](PUBLISHING.md) for pub.dev deployment instructions.
-# splashpay_sdk
