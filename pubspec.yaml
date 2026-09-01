@@ -1,7 +1,20 @@
 name: splashpay_sdk
-description: A standalone Flutter/Dart SDK for integrating the SplashPay Tanzania REST API.
+description: >-
+  A standalone Flutter/Dart SDK for integrating the SplashPay Tanzania REST API.
+  Supports Mobile Money payments, status checks, cancellations, and webhook helpers.
 version: 1.0.0
+
 homepage: https://docs.splashpay.co.tz
+repository: https://github.com/dukanitech/splashpay_sdk
+issue_tracker: https://github.com/dukanitech/splashpay_sdk/issues
+documentation: https://github.com/dukanitech/splashpay_sdk#readme
+
+topics:
+  - payment
+  - splashpay
+  - mobile-money
+  - tanzania
+  - sdk
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -18,4 +31,10 @@ dev_dependencies:
   flutter_lints: ^5.0.0
   http_mock_adapter: ^0.6.1
 
-flutter:
+platforms:
+  android:
+  ios:
+  linux:
+  macos:
+  web:
+  windows:

@@ -1,17 +1,34 @@
-# splashpay_sdk_example
+# SplashPay SDK Example
 
-A new Flutter project.
+Demo Flutter app for the [`splashpay_sdk`](https://pub.dev/packages/splashpay_sdk) package.
 
-## Getting Started
+## Setup
 
-This project is a starting point for a Flutter application.
+```bash
+cd example
+cp .env.example .env
+```
 
-A few resources to get you started if this is your first Flutter project:
+Edit `.env` with your SplashPay credentials:
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+```env
+SPLASHPAY_API_KEY=YOUR_API_KEY
+SPLASHPAY_API_SECRET=YOUR_API_SECRET
+SPLASHPAY_ENVIRONMENT=sandbox
+```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+> Use **test/sandbox** keys for development. Never commit `.env` with real secrets.
+
+## Run
+
+```bash
+flutter pub get
+flutter run
+```
+
+## What it demonstrates
+
+- Loading credentials from `.env`
+- Initializing `SplashPay`
+- Initiating a Mobile Money payment
+- Displaying payment status and error handling

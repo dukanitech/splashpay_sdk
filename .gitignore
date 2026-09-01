@@ -2,7 +2,9 @@
 .dart_tool/
 .packages
 build/
-pubspec.lock
+**/build/
+**/.dart_tool/
+coverage/
 
 # Environment files with secrets
 .env
@@ -11,3 +13,12 @@ pubspec.lock
 
 # IDE
 .idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+
+# GitHub (optional local only; workflow files are committed)
+# .github/ is tracked for CI
+
