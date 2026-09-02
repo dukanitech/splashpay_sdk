@@ -1,9 +1,12 @@
 # splashpay_sdk
 
 [![pub package](https://img.shields.io/pub/v/splashpay_sdk.svg)](https://pub.dev/packages/splashpay_sdk)
+[![pub publisher](https://img.shields.io/pub/publisher/splashpay_sdk?label=dukanitech.com)](https://pub.dev/publishers/dukanitech.com/packages)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 A standalone, production-ready Flutter/Dart package for integrating the [SplashPay Tanzania REST API](https://docs.splashpay.co.tz).
+
+Published by [dukanitech.com](https://pub.dev/publishers/dukanitech.com/packages) on pub.dev.
 
 This package is a standalone SDK that can be consumed by any Flutter application as a normal dependency.
 
@@ -181,7 +184,38 @@ Flutter App  →  Your Backend  →  SplashPay API
 
 Your backend holds `X-API-KEY` and `X-API-SECRET`. The mobile app calls your backend, not SplashPay directly.
 
-The SDK does not log API keys, secrets, or sensitive customer data.
+Use [SplashPay.forMerchant] **only** on the server. The SDK does not log API keys, secrets, or sensitive customer data.
+
+### Flutter apps (backend proxy)
+
+Distributed apps should **never** construct `SplashPay(...)` / `SplashPay.forMerchant(...)` with real credentials.
+
+Instead:
+
+1. Call your authenticated backend (`POST /billing/subscribe`, status, cancel, webhooks).
+2. Reuse SDK models/helpers on the client for status interpretation:
+
+```dart
+import 'package:splashpay_sdk/splashpay_sdk.dart';
+
+final status = PaymentStatus.fromString(payment['status'] as String?);
+if (status.isSuccess) { /* activate UI */ }
+if (status.isTerminal) { /* stop polling */ }
+```
+
+`PaymentStatus.fromString` also accepts common backend aliases (`paid` → success, `reject` → failed).
+
+### Backend Dart services
+
+Server-side Dart may use the full merchant client:
+
+```dart
+final splashPay = SplashPay.forMerchant(
+  apiKey: Platform.environment['SPLASHPAY_API_KEY']!,
+  apiSecret: Platform.environment['SPLASHPAY_API_SECRET']!,
+  environment: SplashPayEnvironment.production,
+);
+```
 
 ## Webhooks
 
@@ -231,4 +265,8 @@ Base URL: `https://api.splashpay.co.tz/api/v1`
 
 MIT — see [LICENSE](LICENSE).
 
+## Publishing
 
+Published under the [dukanitech.com](https://pub.dev/publishers/dukanitech.com/packages) verified publisher on pub.dev.
+
+See [PUBLISHING.md](PUBLISHING.md) for deployment and publisher transfer instructions.

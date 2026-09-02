@@ -22,6 +22,10 @@ enum PaymentStatus {
   unknown;
 
   /// Maps a SplashPay status string to [PaymentStatus].
+  ///
+  /// Also accepts common backend aliases (`paid` → [success],
+  /// `reject` / `rejected` → [failed]) so Flutter apps that talk to their
+  /// own API can reuse this enum without embedding SplashPay secrets.
   static PaymentStatus fromString(String? value) {
     if (value == null || value.isEmpty) {
       return PaymentStatus.unknown;
@@ -33,10 +37,14 @@ enum PaymentStatus {
       case 'processing':
         return PaymentStatus.processing;
       case 'success':
+      case 'paid':
         return PaymentStatus.success;
       case 'failed':
+      case 'reject':
+      case 'rejected':
         return PaymentStatus.failed;
       case 'cancelled':
+      case 'canceled':
         return PaymentStatus.cancelled;
       case 'expired':
         return PaymentStatus.expired;
@@ -64,4 +72,16 @@ enum PaymentStatus {
         return 'unknown';
     }
   }
+
+  /// Whether the payment completed successfully.
+  bool get isSuccess => this == PaymentStatus.success;
+
+  /// Whether the payment ended without success (failed / cancelled / expired).
+  bool get isFailure =>
+      this == PaymentStatus.failed ||
+      this == PaymentStatus.cancelled ||
+      this == PaymentStatus.expired;
+
+  /// Whether no further customer action is expected.
+  bool get isTerminal => isSuccess || isFailure;
 }

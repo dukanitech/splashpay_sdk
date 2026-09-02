@@ -5,10 +5,42 @@ import 'models/payment_response.dart';
 import 'services/mobile_money_service.dart';
 import 'services/payment_service.dart';
 
-/// Main entry point for the SplashPay SDK.
+/// Main entry point for the SplashPay merchant REST client.
+///
+/// **Security:** Only construct this on a trusted backend (or a private
+/// server-side Dart service) that holds `X-API-KEY` / `X-API-SECRET`.
+/// Do **not** embed API secrets in distributed Flutter apps.
+///
+/// Flutter apps should call *your* backend and reuse [PaymentStatus] /
+/// response models from this package — see the README “Backend proxy” section.
 class SplashPay {
-  /// Creates a [SplashPay] client instance.
+  /// Creates a merchant client that talks to SplashPay with API credentials.
+  ///
+  /// Prefer [SplashPay.forMerchant] in new code for clarity.
   SplashPay({
+    required String apiKey,
+    required String apiSecret,
+    SplashPayEnvironment environment = SplashPayEnvironment.production,
+    String? baseUrl,
+    Duration? connectTimeout,
+    Duration? receiveTimeout,
+    Duration? sendTimeout,
+    void Function(String message)? logger,
+    SplashPayClient? client,
+  }) : this.forMerchant(
+          apiKey: apiKey,
+          apiSecret: apiSecret,
+          environment: environment,
+          baseUrl: baseUrl,
+          connectTimeout: connectTimeout,
+          receiveTimeout: receiveTimeout,
+          sendTimeout: sendTimeout,
+          logger: logger,
+          client: client,
+        );
+
+  /// Merchant client for server-side use only (holds API key + secret).
+  SplashPay.forMerchant({
     required String apiKey,
     required String apiSecret,
     SplashPayEnvironment environment = SplashPayEnvironment.production,
